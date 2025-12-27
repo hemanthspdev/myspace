@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .test-box {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    button {
+      background: #6366f1;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      background: #4f46e5;
+    }
+    .success {
+      color: #10b981;
+      font-weight: bold;
+    }
+    .error {
+      color: #ef4444;
+      font-weight: bold;
+    }
+    input {
+      padding: 8px;
+      margin: 5px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 MySpace API Test Page</h1>
+  
+  <div class="test-box">
+    <h2>1. Check if API is loaded</h2>
+    <button onclick="testAPI()">Test API</button>
+    <p id="apiTest"></p>
+  </div>
+  
+  <div class="test-box">
+    <h2>2. Test Server Connection</h2>
+    <button onclick="testServer()">Ping Server</button>
+    <p id="serverTest"></p>
+  </div>
+  
+  <div class="test-box">
+    <h2>3. Test Registration</h2>
+    <input type="text" id="testName" placeholder="Name" value="Test User">
+    <input type="email" id="testEmail" placeholder="Email" value="test@example.com">
+    <input type="password" id="testPassword" placeholder="Password" value="password123">
+    <br>
+    <button onclick="testRegister()">Register</button>
+    <p id="registerTest"></p>
+  </div>
+  
+  <div class="test-box">
+    <h2>4. Test Login</h2>
+    <input type="email" id="loginEmail" placeholder="Email" value="test@example.com">
+    <input type="password" id="loginPassword" placeholder="Password" value="password123">
+    <br>
+    <button onclick="testLogin()">Login</button>
+    <p id="loginTest"></p>
+  </div>
+  
+  <div class="test-box">
+    <h2>5. Current Token</h2>
+    <button onclick="showToken()">Show Token</button>
+    <button onclick="clearToken()">Clear Token</button>
+    <p id="tokenDisplay"></p>
+  </div>
+  
+  <script src="js/api.js"></script>
+  <script>
+    function testAPI() {
+      const result = document.getElementById('apiTest');
+      if (typeof API !== 'undefined') {
+        result.innerHTML = '<span class="success">✅ API is loaded!</span>';
+      } else {
+        result.innerHTML = '<span class="error">❌ API is NOT loaded!</span>';
+      }
+    }
+    
+    async function testServer() {
+      const result = document.getElementById('serverTest');
+      result.innerHTML = 'Testing...';
+      
+      try {
+        const response = await fetch('http://localhost:3001/api/auth/me');
+        if (response.status === 401) {
+          result.innerHTML = '<span class="success">✅ Server is running! (Got 401 as expected without token)</span>';
+        } else {
+          result.innerHTML = `<span class="success">✅ Server responded with status: ${response.status}</span>`;
+        }
+      } catch (error) {
+        result.innerHTML = `<span class="error">❌ Server not responding: ${error.message}</span>`;
+      }
+    }
+    
+    async function testRegister() {
+      const result = document.getElementById('registerTest');
+      result.innerHTML = 'Registering...';
+      
+      const name = document.getElementById('testName').value;
+      const email = document.getElementById('testEmail').value;
+      const password = document.getElementById('testPassword').value;
+      
+      try {
+        const response = await API.register(name, email, password);
+        result.innerHTML = `<span class="success">✅ Registration successful! Token: ${response.token.substring(0, 20)}...</span>`;
+        localStorage.setItem('token', response.token);
+      } catch (error) {
+        result.innerHTML = `<span class="error">❌ Registration failed: ${error.message}</span>`;
+      }
+    }
+    
+    async function testLogin() {
+      const result = document.getElementById('loginTest');
+      result.innerHTML = 'Logging in...';
+      
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      try {
+        const response = await API.login(email, password);
+        result.innerHTML = `<span class="success">✅ Login successful! Token: ${response.token.substring(0, 20)}...</span>`;
+        localStorage.setItem('token', response.token);
+      } catch (error) {
+        result.innerHTML = `<span class="error">❌ Login failed: ${error.message}</span>`;
+      }
+    }
+    
+    function showToken() {
+      const token = localStorage.getItem('token');
+      const result = document.getElementById('tokenDisplay');
+      if (token) {
+        result.innerHTML = `<span class="success">Token: ${token.substring(0, 50)}...</span>`;
+      } else {
+        result.innerHTML = '<span class="error">No token stored</span>';
+      }
+    }
+    
+    function clearToken() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      document.getElementById('tokenDisplay').innerHTML = '<span class="success">✅ Token cleared!</span>';
+    }
+  </script>
+</body>
+</html>
