@@ -4,7 +4,10 @@
 
 console.log('API.js loading...');
 
-const API_BASE_URL = 'http://localhost:3001/api';
+// Use relative URL for production, localhost for development
+const API_BASE_URL = window.location.hostname === 'localhost' 
+  ? 'http://localhost:3001/api'
+  : '/api';
 
 // ===================================
 // API HELPER
@@ -45,7 +48,7 @@ class API {
       
       // Check if it's a network error
       if (error.message === 'Failed to fetch') {
-        throw new Error('Cannot connect to server. Make sure the server is running on http://localhost:3001');
+        throw new Error('Cannot connect to server. Please check your connection.');
       }
       
       throw error;
