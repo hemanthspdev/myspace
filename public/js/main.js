@@ -1201,3 +1201,77 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
     window.location.href = 'login.html';
   }
 });
+
+/* ===================================
+   ADD THIS TO THE END OF public/js/main.js
+=================================== */
+
+// ===================================
+// MOBILE MENU
+// ===================================
+
+function initializeMobileMenu() {
+  const menuToggle = document.getElementById('mobileMenuToggle');
+  const overlay = document.getElementById('mobileOverlay');
+  const sidebar = document.querySelector('.sidebar');
+  const navItems = document.querySelectorAll('.nav-item');
+  
+  if (!menuToggle || !overlay || !sidebar) return;
+  
+  // Toggle menu
+  menuToggle.addEventListener('click', () => {
+    sidebar.classList.toggle('mobile-open');
+    overlay.classList.toggle('active');
+    menuToggle.querySelector('span').textContent = 
+      sidebar.classList.contains('mobile-open') ? '✕' : '☰';
+  });
+  
+  // Close on overlay click
+  overlay.addEventListener('click', () => {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('active');
+    menuToggle.querySelector('span').textContent = '☰';
+  });
+  
+  // Close on nav item click
+  navItems.forEach(item => {
+    item.addEventListener('click', () => {
+      if (window.innerWidth <= 968) {
+        sidebar.classList.remove('mobile-open');
+        overlay.classList.remove('active');
+        menuToggle.querySelector('span').textContent = '☰';
+      }
+    });
+  });
+  
+  // Handle window resize
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (window.innerWidth > 968) {
+        sidebar.classList.remove('mobile-open');
+        overlay.classList.remove('active');
+        menuToggle.querySelector('span').textContent = '☰';
+      }
+    }, 250);
+  });
+}
+
+// Add to DOMContentLoaded
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadUserData();
+  initializeNavigation();
+  initializeClock();
+  initializeTheme();
+  initializeDashboard();
+  initializeTasks();
+  initializeFocus();
+  initializeNotes();
+  initializeWeather();
+  initializeSettings();
+  initializeMobileMenu(); // ADD THIS LINE
+  
+  // Initial data load
+  await loadAllData();
+});

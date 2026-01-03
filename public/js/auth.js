@@ -244,3 +244,4 @@ if (particles) {
 }
 
 console.log('Auth.js fully loaded');
+

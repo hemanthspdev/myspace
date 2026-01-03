@@ -327,3 +327,219 @@ body {
     padding: 40px 30px;
   }
 }
+
+/* ===================================
+   ADD THIS TO THE END OF public/css/auth.css
+=================================== */
+
+/* Mobile Responsive Styles */
+@media (max-width: 968px) {
+  .auth-container {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    max-width: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
+  
+  .auth-left {
+    padding: 40px 30px;
+    min-height: 40vh;
+  }
+  
+  .hero-title {
+    font-size: 36px;
+  }
+  
+  .hero-subtitle {
+    font-size: 18px;
+  }
+  
+  .auth-right {
+    padding: 40px 30px;
+    min-height: 60vh;
+  }
+  
+  .auth-box {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-left {
+    padding: 30px 20px;
+  }
+  
+  .hero-title {
+    font-size: 28px;
+  }
+  
+  .hero-subtitle {
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+  
+  .feature {
+    font-size: 14px;
+  }
+  
+  .feature-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+  
+  .auth-right {
+    padding: 30px 20px;
+  }
+  
+  .form-title {
+    font-size: 24px;
+  }
+  
+  .form-subtitle {
+    font-size: 13px;
+  }
+  
+  .input-auth {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+  
+  .btn-auth {
+    padding: 12px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    box-shadow: none;
+  }
+  
+  .auth-left {
+    padding: 20px 16px;
+  }
+  
+  .hero-title {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+  
+  .hero-subtitle {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .hero-features {
+    gap: 12px;
+  }
+  
+  .feature {
+    font-size: 13px;
+    gap: 10px;
+  }
+  
+  .feature-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+  
+  .auth-right {
+    padding: 20px 16px;
+  }
+  
+  .auth-logo {
+    margin-bottom: 30px;
+  }
+  
+  .logo-icon {
+    font-size: 28px;
+  }
+  
+  .logo-text {
+    font-size: 24px;
+  }
+  
+  .form-title {
+    font-size: 22px;
+  }
+  
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  .form-group label {
+    font-size: 13px;
+  }
+  
+  .input-auth {
+    padding: 11px 13px;
+    font-size: 14px;
+  }
+  
+  .btn-auth {
+    padding: 11px;
+    font-size: 14px;
+  }
+  
+  .form-switch {
+    font-size: 13px;
+  }
+}
+
+/* Landscape mode on mobile */
+@media (max-width: 968px) and (orientation: landscape) {
+  .auth-container {
+    flex-direction: row;
+  }
+  
+  .auth-left {
+    min-height: 100vh;
+  }
+  
+  .auth-right {
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+  
+  .hero-features {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+}
+
+/* PWA Safe Areas */
+@supports (padding: env(safe-area-inset-top)) {
+  .auth-container {
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+}
+
+/* Touch improvements */
+@media (hover: none) and (pointer: coarse) {
+  .btn-auth,
+  .form-switch a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .input-auth {
+    font-size: 16px !important; /* Prevent zoom on iOS */
+  }
+}
+
+/* Hide particles on mobile for performance */
+@media (max-width: 768px) {
+  .particles {
+    display: none;
+  }
+  
+  .auth-left::before {
+    display: none;
+  }
+}
